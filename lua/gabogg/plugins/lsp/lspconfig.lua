@@ -96,20 +96,21 @@ return {
       },
     })
 
-    lspconfig.eslint.setup({
-      root_dir = lspconfig.util.root_pattern(
-        ".eslintrc.js",
-        ".eslintrc.json",
-        "eslint.config.js",
-        "package.json",
-        ".git"
-      ),
-      settings = {
-        format = { enable = true }, -- habilitar formateo desde eslint
-      },
-      on_attach = function(client)
-        client.server_capabilities.documentFormattingProvider = true
-      end,
-    })
+    -- Duped usage of eslint
+    -- lspconfig.eslint.setup({
+    --   root_dir = lspconfig.util.root_pattern(
+    --     ".eslintrc.js",
+    --     ".eslintrc.json",
+    --     "eslint.config.js",
+    --     "package.json",
+    --     ".git"
+    --   ),
+    --   settings = {
+    --     format = { enable = true }, -- habilitar formateo desde eslint
+    --   },
+    --   on_attach = function(client)
+    --     client.server_capabilities.documentFormattingProvider = true
+    --   end,
+    -- })
   end,
 }
