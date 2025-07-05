@@ -3,31 +3,34 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     local conform = require("conform")
+    local lint = require("lint")
 
-    conform.formatters.eslint_d = {
-      command = "eslint_d",
-      args = {
-        "--fix",
-        function(ctx)
-          return ctx.filename
-        end,
-      },
-      stdin = false,
-      cwd = function(ctx)
-        return vim.fs.dirname(
-          vim.fs.find({ "eslint.config.js", "package.json" }, { upward = true, path = ctx.filename })[1]
-            or vim.fn.getcwd()
-        )
-      end,
-      condition = function(ctx)
-        return vim.fs.find({
-          "eslint.config.js",
-          ".eslintrc.js",
-          ".eslintrc.cjs",
-          ".eslintrc.json",
-        }, { upward = true, path = ctx.filename })[1] ~= nil
-      end,
-    }
+    -- conform.formatters.eslint_d = {
+    --   command = "eslint_d",
+    --   args = {
+    --     "--fix-to-stdout",
+    --     "--stdin",
+    --     "--stdin-filename",
+    --     function(ctx)
+    --       return ctx.filename
+    --     end,
+    --   },
+    --   stdin = true,
+    --   cwd = function(ctx)
+    --     return vim.fs.dirname(
+    --       vim.fs.find({ "eslint.config.js", "package.json" }, { upward = true, path = ctx.filename })[1]
+    --         or vim.fn.getcwd()
+    --     )
+    --   end,
+    --   condition = function(ctx)
+    --     return vim.fs.find({
+    --       "eslint.config.js",
+    --       ".eslintrc.js",
+    --       ".eslintrc.cjs",
+    --       ".eslintrc.json",
+    --     }, { upward = true, path = ctx.filename })[1] ~= nil
+    --   end,
+    -- }
 
     conform.setup({
       formatters_by_ft = {
@@ -51,6 +54,14 @@ return {
         async = false,
         timeout_ms = 1000,
       },
+    })
+
+    -- After formatting on save, re-lint to update diagnostics
+    vim.api.nvim_create_autocmd("BufWritePost", {
+      pattern = { "*.js", "*.ts", "*.jsx", "*.tsx", "*.svelte" },
+      callback = function()
+        lint.try_lint()
+      end,
     })
 
     vim.keymap.set({ "n", "v" }, "<leader>mp", function()

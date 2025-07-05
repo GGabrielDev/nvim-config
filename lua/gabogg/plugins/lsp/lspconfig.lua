@@ -79,6 +79,7 @@ return {
     end
 
     lspconfig.lua_ls.setup({
+      capabilities = capabilities,
       settings = {
         Lua = {
           runtime = {
@@ -96,21 +97,12 @@ return {
       },
     })
 
-    -- Duped usage of eslint
-    -- lspconfig.eslint.setup({
-    --   root_dir = lspconfig.util.root_pattern(
-    --     ".eslintrc.js",
-    --     ".eslintrc.json",
-    --     "eslint.config.js",
-    --     "package.json",
-    --     ".git"
-    --   ),
-    --   settings = {
-    --     format = { enable = true }, -- habilitar formateo desde eslint
-    --   },
-    --   on_attach = function(client)
-    --     client.server_capabilities.documentFormattingProvider = true
-    --   end,
-    -- })
+    lspconfig.eslint.setup({
+      capabilities = capabilities,
+    })
+
+    lspconfig.ts_ls.setup({
+      capabilities = capabilities,
+    })
   end,
 }
