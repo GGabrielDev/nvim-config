@@ -26,11 +26,17 @@ keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }
 
 keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
 keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
+keymap.set("n", "<leader>tt", "<cmd>lua toggle_tabs()<CR>", { desc = "Go to last visited tab" }) -- go to last visited tab
 keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
 -- lazy work
-keymap.set("n", "<leader><leader>r", "<cmd>source $MYVIMRC<CR>", { desc = "Reload nvim configuration" }) -- reload nvim settings
+keymap.set(
+  "n",
+  "<leader><leader>r",
+  "<cmd>lua reload_neovim_config()<CR>",
+  { noremap = true, silent = true, desc = "Reload Neovim Config" }
+) -- reload nvim settings
 keymap.set("n", "<leader><leader>l", "<cmd>Lazy<CR>", { desc = "Open Lazy.nvim UI" }) -- open lazy ui
 keymap.set("n", "<leader><leader>m", "<cmd>Mason<CR>", { desc = "Open Mason.nvim UI" }) -- open mason ui
