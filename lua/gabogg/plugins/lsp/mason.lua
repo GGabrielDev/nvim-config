@@ -36,6 +36,7 @@ return {
         "emmet_ls",
         "prismals",
         "pyright",
+        "jdtls",
       },
     })
 
@@ -47,6 +48,8 @@ return {
         "black", -- python formatter
         "pylint", -- python linter
         "eslint_d", -- js linter
+        "java-debug-adapter",
+        "java-test",
       },
       integrations = {
         ["mason-lspconfig"] = true,
